@@ -33,20 +33,29 @@ def read_data_from_file(data_file):
                 parse_cols = 'A:AW', index_col=0)
     return df
 
-def create_tex_file(df, output_file):
-    keys = ['Component', 'Axis', 'Controller', 
+def create_data_subset(df):
+    keys = ['Component', 'Axis', 'Controller', 'Motor type',
             'Axis number', 'Approach movement direction', 
             'Maximum speed (EU/s)', 'Phase current (mA)', 
             'Holding current (%)']
+    index_list = ['Component', 'Axis']
+    return df.loc[keys,:].transpose().set_index(index_list)
+
+def create_tex_file(df, output_file):
     output_file_base = output_file.split('.')[0]
     output_file_tex = output_file_base + '.tex'
     of = open (output_file_tex, 'w')
     ifile = open('table_file_begin.tex', 'r')
     of.writelines([l for l in ifile.readlines()])
-    of.write(df.loc[keys,:].to_latex())
+    of.write(df.to_latex())
     ifile = open('table_file_end.tex', 'r')
     of.writelines([l for l in ifile.readlines()])
     of.close()
+
+def create_csv(df, output_file):
+    output_file_base = output_file.split('.')[0]
+    output_file_full = output_file_base + '.csv'
+    df.to_csv(open(output_file_full, 'w'), encoding='utf-8')
 
 def create_pdf(output_file):
     output_file_base = output_file.split('.')[0]
@@ -55,8 +64,10 @@ def create_pdf(output_file):
 def main():
     args = process_arguments()
     df = read_data_from_file(args.file_path)
-    create_tex_file(df, args.output_file)
-    create_pdf(args.output_file)
+    dfs = create_data_subset(df)
+    #create_tex_file(dfs, args.output_file)
+    #create_pdf(args.output_file)
+    create_csv(dfs, args.output_file)
 
 if __name__ == '__main__':
     main()
