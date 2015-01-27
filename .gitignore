@@ -1,1 +1,5 @@
 *.swp
+*.aux
+*.log
+*.pdf
+srx_motion_doc.tex
