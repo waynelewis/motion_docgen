@@ -50,13 +50,13 @@ def create_tex_file(df, output_file):
 
 def create_pdf(output_file):
     output_file_base = output_file.split('.')[0]
-    call(['pdflatex', outputfile_base + '.tex'])
+    call(['pdflatex', output_file_base + '.tex'])
         
 def main():
     args = process_arguments()
     df = read_data_from_file(args.file_path)
     create_tex_file(df, args.output_file)
-    create_pdf(arg.output_file)
+    create_pdf(args.output_file)
 
 if __name__ == '__main__':
     main()
