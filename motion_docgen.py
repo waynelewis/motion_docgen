@@ -34,7 +34,7 @@ def create_data_subset(df):
     keys = ['Component', 'Axis', 'Controller', 
             'Axis number', 'Motor type',
             'Reference type',
-            'Approach movement direction', 
+            'Reference approach direction', 
             'Maximum speed (EU/s)', 'Phase current (mA)', 
             'Holding current (%)']
     index_list = ['Component', 'Axis']
